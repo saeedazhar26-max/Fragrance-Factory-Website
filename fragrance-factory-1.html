@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fragrance Factory</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-pale: #F5E6B8;
+    --black: #080808;
+    --dark: #111111;
+    --dark2: #1a1a1a;
+    --white: #F9F5EE;
+    --gray: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s, color 0.3s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  .nav-cta {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+
+  .nav-cta:hover { background: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 120px 24px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 60% at 50% 40%, rgba(201,168,76,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 60%),
+      var(--black);
+  }
+
+  .hero-ornament {
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+    margin-bottom: 28px;
+    animation: fadeUp 1s ease both;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero-ornament::before, .hero-ornament::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px, 8vw, 96px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    animation: fadeUp 1s 0.2s ease both;
+    position: relative;
+  }
+
+  .hero h1 .gold { color: var(--gold); }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(18px, 3vw, 26px);
+    color: rgba(249,245,238,0.6);
+    margin-top: 20px;
+    animation: fadeUp 1s 0.4s ease both;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    margin: 40px auto;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+
+  .hero-tagline {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(249,245,238,0.5);
+    animation: fadeUp 1s 0.7s ease both;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 16px;
+    margin-top: 48px;
+    animation: fadeUp 1s 0.8s ease both;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1px solid var(--gold);
+  }
+
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white);
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    text-decoration: none;
+    border: 1px solid rgba(249,245,238,0.3);
+    transition: all 0.3s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* TICKER */
+  .ticker {
+    background: var(--gold);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-flex;
+    gap: 0;
+    animation: ticker 25s linear infinite;
+  }
+
+  .ticker-item {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--black);
+    padding: 0 40px;
+  }
+
+  .ticker-item::after {
+    content: '◆';
+    margin-left: 40px;
+    opacity: 0.4;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION BASE */
+  section { padding: 100px 48px; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  .section-title .gold { color: var(--gold); }
+
+  /* ABOUT */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-text p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    line-height: 1.8;
+    color: rgba(249,245,238,0.75);
+    margin-top: 32px;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  .stat {
+    background: var(--dark2);
+    padding: 32px 24px;
+    border: 1px solid rgba(201,168,76,0.1);
+    transition: border-color 0.3s;
+  }
+
+  .stat:hover { border-color: rgba(201,168,76,0.4); }
+
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 36px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(249,245,238,0.5);
+    margin-top: 6px;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-card {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-card::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 200px;
+    color: var(--gold);
+    opacity: 0.06;
+    line-height: 1;
+  }
+
+  .about-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.6;
+    color: var(--white);
+    position: relative;
+  }
+
+  .about-card-author {
+    margin-top: 24px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    position: relative;
+  }
+
+  /* PRODUCTS */
+  .products-section {
+    background: var(--dark);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .products-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 64px;
+  }
+
+  .products-header .section-label { justify-content: center; }
+  .products-header .section-label::before { display: none; }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .product-card {
+    background: var(--dark2);
+    padding: 40px 32px;
+    border: 1px solid rgba(201,168,76,0.08);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s, transform 0.4s;
+    cursor: pointer;
+  }
+
+  .product-card:hover {
+    border-color: rgba(201,168,76,0.35);
+    transform: translateY(-4px);
+  }
+
+  .product-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+    transform-origin: left;
+  }
+
+  .product-card:hover::after { transform: scaleX(1); }
+
+  .product-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  .product-category {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .product-name {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+
+  .product-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(249,245,238,0.55);
+    margin-bottom: 24px;
+  }
+
+  .product-price {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .product-price span {
+    font-size: 12px;
+    color: rgba(249,245,238,0.4);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    margin-left: 6px;
+  }
+
+  /* FEATURED BANNER */
+  .featured-banner {
+    max-width: 1200px;
+    margin: 64px auto 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.03) 100%);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .featured-banner-text h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .featured-banner-text p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: rgba(249,245,238,0.6);
+    font-style: italic;
+  }
+
+  .featured-price {
+    text-align: center;
+  }
+
+  .featured-price .big {
+    font-family: 'Cinzel', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .featured-price .sub {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(249,245,238,0.5);
+    margin-top: 8px;
+  }
+
+  /* HOW IT WORKS */
+  .how {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+    position: relative;
+  }
+
+  .step {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 48px 32px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .step:hover { border-color: rgba(201,168,76,0.35); }
+
+  .step-num {
+    font-family: 'Cinzel', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: rgba(201,168,76,0.15);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .step h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+
+  .step p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(249,245,238,0.55);
+  }
+
+  /* BRANDS */
+  .brands-section {
+    background: var(--dark);
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .brands-header { text-align: center; margin-bottom: 48px; }
+  .brands-header .section-label { justify-content: center; }
+  .brands-header .section-label::before { display: none; }
+
+  .brands-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .brand-pill {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 16px 28px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: rgba(249,245,238,0.6);
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .brand-pill:hover {
+    border-color: rgba(201,168,76,0.4);
+    color: var(--gold);
+  }
+
+  /* SHIPPING */
+  .shipping {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .shipping-features {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 40px;
+  }
+
+  .ship-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 24px 28px;
+    transition: border-color 0.3s;
+  }
+
+  .ship-item:hover { border-color: rgba(201,168,76,0.3); }
+
+  .ship-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .ship-text h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .ship-text p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(249,245,238,0.55);
+  }
+
+  .order-card {
+    background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.03));
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 48px;
+    text-align: center;
+  }
+
+  .order-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .order-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: rgba(249,245,238,0.65);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  .whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #25D366;
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 18px 36px;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1px solid #25D366;
+  }
+
+  .whatsapp-btn:hover {
+    background: transparent;
+    color: #25D366;
+  }
+
+  .order-num {
+    margin-top: 24px;
+    font-size: 22px;
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    padding: 64px 48px 32px;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 64px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: rgba(249,245,238,0.5);
+    line-height: 1.7;
+  }
+
+  .footer-col h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col li {
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: rgba(249,245,238,0.5);
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+
+  .footer-col li:hover { color: var(--white); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-bottom p {
+    font-size: 11px;
+    color: rgba(249,245,238,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-insta {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-decoration: none;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section { padding: 60px 20px; }
+
+    .about { grid-template-columns: 1fr; gap: 40px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .shipping { grid-template-columns: 1fr; gap: 40px; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .featured-banner { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">The Fragrance Factory</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#brands">Brands</a></li>
+    <li><a href="#order">Order</a></li>
+  </ul>
+  <a href="https://wa.me/27828602220" class="nav-cta" target="_blank">Order Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ornament">Luxury Scents · South Africa</div>
+  <h1>The<br><span class="gold">Fragrance</span><br>Factory</h1>
+  <p class="hero-sub">Smell incredible. Feel irresistible.</p>
+  <div class="hero-divider"></div>
+  <p class="hero-tagline">Designer & Arabic Fragrances · Nationwide Delivery</p>
+  <div class="hero-cta-group">
+    <a href="https://wa.me/27828602220" class="btn-primary" target="_blank">
+      🛒 Shop on WhatsApp
+    </a>
+    <a href="#collection" class="btn-outline">View Collection</a>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Designer Fragrances from R400</span>
+    <span class="ticker-item">Nationwide Courier</span>
+    <span class="ticker-item">STD Courier R100</span>
+    <span class="ticker-item">Order via WhatsApp</span>
+    <span class="ticker-item">Smell Premium · Pay Less</span>
+    <span class="ticker-item">Arabic & Western Scents</span>
+    <span class="ticker-item">Designer Fragrances from R400</span>
+    <span class="ticker-item">Nationwide Courier</span>
+    <span class="ticker-item">STD Courier R100</span>
+    <span class="ticker-item">Order via WhatsApp</span>
+    <span class="ticker-item">Smell Premium · Pay Less</span>
+    <span class="ticker-item">Arabic & Western Scents</span>
+  </div>
+</div>
+
+<!-- BRANDS -->
+<section id="brands" class="brands-section">
+  <div class="brands-header reveal">
+    <div class="section-label">Stocked Brands</div>
+    <h2 class="section-title">Brands We <span class="gold">Carry</span></h2>
+  </div>
+  <div class="brands-grid reveal">
+    <div class="brand-pill">Armani</div>
+    <div class="brand-pill">Dior</div>
+    <div class="brand-pill">Chanel</div>
+    <div class="brand-pill">Louis Vuitton</div>
+    <div class="brand-pill">Creed</div>
+    <div class="brand-pill">Versace</div>
+    <div class="brand-pill">Azzaro</div>
+    <div class="brand-pill">Valentino</div>
+    <div class="brand-pill">Viktor & Rolf</div>
+    <div class="brand-pill">Parfums de Marly</div>
+    <div class="brand-pill">Gucci</div>
+    <div class="brand-pill">Mugler</div>
+    <div class="brand-pill">Burberry</div>
+    <div class="brand-pill">Atelier Cologne</div>
+    <div class="brand-pill">Afnan</div>
+    <div class="brand-pill">Rasasi</div>
+    <div class="brand-pill">Hawas</div>
+    <div class="brand-pill">Lattafa</div>
+    <div class="brand-pill">Badee Al Oud</div>
+    <div class="brand-pill">The Persian Gold</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about reveal">
+    <div class="about-text">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">Luxury Without<br>the <span class="gold">Price Tag</span></h2>
+      <p>We believe everyone deserves to smell extraordinary. The Fragrance Factory brings you premium designer and Arabic fragrances at prices that make sense — without compromising on quality or authenticity.</p>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-num">R400</div>
+          <div class="stat-label">All Designer Frags</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">79+</div>
+          <div class="stat-label">Products Listed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">R100</div>
+          <div class="stat-label">Courier Nationwide</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">🇿🇦</div>
+          <div class="stat-label">Based in SA</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-card">
+        <p>"Smell premium without paying premium. Limited stock available — don't miss out."</p>
+        <div class="about-card-author">— The Fragrance Factory</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="collection" class="products-section">
+  <div class="products-header reveal">
+    <div class="section-label">The Collection</div>
+    <h2 class="section-title">Find Your<br><span class="gold">Signature Scent</span></h2>
+  </div>
+
+  <div class="products-grid reveal">
+    <div class="product-card">
+      <div class="product-icon">🔥</div>
+      <div class="product-category">Men's Western</div>
+      <div class="product-name">Emporio Armani<br>Stronger With You</div>
+      <p class="product-desc">A warm, spicy oriental with notes of chestnut, sage and vanilla. Bold yet irresistible.</p>
+      <div class="product-price">R400 <span>per bottle</span></div>
+    </div>
+    <div class="product-card">
+      <div class="product-icon">🌙</div>
+      <div class="product-category">Arabic Oud</div>
+      <div class="product-name">Badee Al Oud<br>For Glory</div>
+      <p class="product-desc">Rich and majestic. A deep oud-based fragrance that commands presence and respect.</p>
+      <div class="product-price">R400 <span>per bottle</span></div>
+    </div>
+    <div class="product-card">
+      <div class="product-icon">💎</div>
+      <div class="product-category">Men's Designer</div>
+      <div class="product-name">Azzaro<br>Wanted Forever</div>
+      <p class="product-desc">A magnetic, woody aromatic scent. Fresh citrus top notes meet a warm vetiver base.</p>
+      <div class="product-price">R400 <span>per bottle</span></div>
+    </div>
+    <div class="product-card">
+      <div class="product-icon">🌹</div>
+      <div class="product-category">Women's Designer</div>
+      <div class="product-name">Valentino<br>Donna Born in Roma</div>
+      <p class="product-desc">Sensual and modern. A floral oriental fragrance for the bold, free-spirited woman.</p>
+      <div class="product-price">R400 <span>per bottle</span></div>
+    </div>
+    <div class="product-card">
+      <div class="product-icon">⚡</div>
+      <div class="product-category">Men's Designer</div>
+      <div class="product-name">Viktor & Rolf<br>Spicebomb</div>
+      <p class="product-desc">An explosive cocktail of spice and freshness. The ultimate weapon of seduction.</p>
+      <div class="product-price">R400 <span>per bottle</span></div>
+    </div>
+    <div class="product-card">
+      <div class="product-icon">🌊</div>
+      <div class="product-category">Women's Designer</div>
+      <div class="product-name">Chanel<br>Coco Mademoiselle</div>
+      <p class="product-desc">Timeless, elegant and free-spirited. A modern oriental floral that never fades from memory.</p>
+      <div class="product-price">R400 <span>per bottle</span></div>
+    </div>
+  </div>
+
+  <div class="featured-banner reveal">
+    <div class="featured-banner-text">
+      <h3>🔥 All Designer Fragrances</h3>
+      <p>Limited stock available — once it's gone, it's gone. Order today via WhatsApp.</p>
+    </div>
+    <div class="featured-price">
+      <div class="big">R400</div>
+      <div class="sub">Flat rate · Any designer frag</div>
+    </div>
+    <a href="https://wa.me/27828602220" class="btn-primary" target="_blank">Order Now</a>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="order">
+  <div class="how reveal">
+    <div class="section-label" style="justify-content:center;"><span style="display:none"></span> How To Order</div>
+    <h2 class="section-title">Simple as<br><span class="gold">1, 2, 3</span></h2>
+  </div>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h4>Browse & Choose</h4>
+      <p>Scroll through our collection on Instagram or this site. Find your perfect scent — or ask us for a recommendation.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h4>WhatsApp Us</h4>
+      <p>Message us on 082 860 2220 with your chosen fragrance. We'll confirm availability and sort your payment.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h4>We Deliver</h4>
+      <p>Your order is couriered nationwide. Standard courier rates at R100. Delivered straight to your door.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHIPPING / ORDER -->
+<section>
+  <div class="shipping reveal">
+    <div>
+      <div class="section-label">Delivery Info</div>
+      <h2 class="section-title">We Ship<br><span class="gold">Everywhere</span></h2>
+      <div class="shipping-features">
+        <div class="ship-item">
+          <div class="ship-icon">🚚</div>
+          <div class="ship-text">
+            <h4>Nationwide Courier</h4>
+            <p>We deliver to every corner of South Africa. Wherever you are, your fragrance finds you.</p>
+          </div>
+        </div>
+        <div class="ship-item">
+          <div class="ship-icon">📦</div>
+          <div class="ship-text">
+            <h4>Standard Rate R100</h4>
+            <p>Flat courier fee of R100. No hidden costs, no surprises at checkout.</p>
+          </div>
+        </div>
+        <div class="ship-item">
+          <div class="ship-icon">⚡</div>
+          <div class="ship-text">
+            <h4>Fast Processing</h4>
+            <p>Orders confirmed via WhatsApp. We process quickly so you're never waiting long.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="order-card reveal">
+      <h3>Ready to Order?</h3>
+      <p>Message us on WhatsApp and we'll get you sorted with your perfect scent in minutes.</p>
+      <a href="https://wa.me/27828602220" class="whatsapp-btn" target="_blank">
+        <span>💬</span> Chat on WhatsApp
+      </a>
+      <div class="order-num">082 860 2220</div>
+      <p style="margin-top:16px; font-size:12px; color:rgba(249,245,238,0.35); font-family:'Raleway',sans-serif;">Also find us on Instagram @the.fragrance.factory._</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <h3>THE FRAGRANCE FACTORY</h3>
+      <p>Bringing you the world's finest scents at prices that make luxury accessible to everyone.</p>
+      <p style="margin-top:12px; font-size:12px; color:rgba(249,245,238,0.3); font-style:normal; font-family:'Raleway',sans-serif;">Smell incredible. Feel irresistible.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="#about" style="color:inherit;text-decoration:none;">About Us</a></li>
+        <li><a href="#collection" style="color:inherit;text-decoration:none;">Collection</a></li>
+        <li><a href="#brands" style="color:inherit;text-decoration:none;">Brands</a></li>
+        <li><a href="#order" style="color:inherit;text-decoration:none;">How To Order</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li>082 860 2220</li>
+        <li>WhatsApp to Order</li>
+        <li>@the.fragrance.factory._</li>
+        <li>Nationwide Delivery 🇿🇦</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 The Fragrance Factory · All rights reserved</p>
+    <a href="https://instagram.com/the.fragrance.factory._" class="footer-insta" target="_blank">@the.fragrance.factory._</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth nav highlight
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
